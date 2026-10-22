@@ -127,7 +127,7 @@
                                             <tr>
                                                 <td class="text-center">
                                                     @if ($data->Image)
-                                                        <img src="{{ asset('storage/images/' . $data->Image) }}" alt="{{ $data->Judul }}" style="height: auto; width: 50%; object-fit: cover; border-radius: 4px;" onerror="this.src='https://via.placeholder.com/40'">
+                                                        <img src="{{ asset('storage/images/' . $data->Image) }}" alt="{{ $data->Judul }}" style="height: auto; width: auto; object-fit: cover; border-radius: 4px;" onerror="this.src='https://via.placeholder.com/40'">
                                                     @else
                                                         <span class="text-muted">-</span>
                                                     @endif
@@ -136,8 +136,8 @@
                                                 <td>{{ \Illuminate\Support\Str::limit($data->Isi, 60) }}</td>
                                                 <td>{{ $data->Tanggal }}</td>
                                                 <td>
-                                                    <a href="{{ $data->Link }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-info">
-                                                        <i class="fas fa-external-link-alt"></i> Buka Link
+                                                    <a href="{{ $data->Link }}" target="_blank" rel="noopener noreferrer" class="nav-link text-decoration-none text-dark d-inline-block text-truncate" style="max-width: 150px; hover: text-decoration: underline;">
+                                                        {{ $data->Link }}
                                                     </a>
                                                 </td>
                                                 <td>
@@ -232,7 +232,6 @@
         </div>
     </div>
 
-    <!-- Modal Tambah Artikel -->
     <div class="modal fade" id="modalTambahArtikel" tabindex="-1" aria-labelledby="modalTambahArtikelLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
