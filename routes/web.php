@@ -2,25 +2,28 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ArtikelController;
 
-Route::get('/', [EventController::class, 'index']);
+// Halaman Publik (Frontend)
+Route::get('/', [EventController::class, 'index'])->name('welcome');
 
+// Auth
 Route::get('/login', function () {
     return view('login');
 })->name('login');
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-
+// Admin Dashboard & Pages
 Route::get('/admin', function () {
     return view('admin.index');
 })->name('admin');
 
-Route::get('/admin/data-artikel', function () {
-    return view('admin.data_artikel');
-})->name('data_artikel');
+// CRUD Data Artikel Admin
+Route::get('/admin/data-artikel', [ArtikelController::class, 'index'])->name('data_artikel');
+Route::post('/admin/data-artikel', [ArtikelController::class, 'store'])->name('data_artikel.store');
+Route::put('/admin/data-artikel/{id}', [ArtikelController::class, 'update'])->name('data_artikel.update');
+Route::delete('/admin/data-artikel/{id}', [ArtikelController::class, 'destroy'])->name('data_artikel.destroy');
 
+// Halaman Admin Pelengkap Lainnya
 Route::get('/admin/charts', function () {
     return view('admin.charts');
 })->name('charts');

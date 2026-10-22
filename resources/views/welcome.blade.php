@@ -1,9 +1,3 @@
-<?php
-require_once resource_path('config/connect.php');
-$sql = "SELECT * FROM artikel";
-$result = mysqli_query($connect, $sql);
-$artikel = mysqli_fetch_all($result, MYSQLI_ASSOC);
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,10 +13,10 @@ $artikel = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <body>
     <div class="container">
         <div class="Header">
-            <h1 class="text-center">My Profile</h1>
+            <h1 class="text-center my-4">My Profile</h1>
         </div>
         <div class="Navbar">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary rounded-3 shadow-sm px-3">
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
@@ -46,61 +40,89 @@ $artikel = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         </ul>
                     </div>
                     <div class="text-end">
-                        <a class="nav-link" href="{{ route('admin') }}">
-                            Login
+                        <a class="btn btn-outline-primary btn-sm" href="{{ route('admin') }}">
+                            Login Admin
                         </a>
                     </div>
                 </div>
             </nav>
         </div>
         <div class="Content mt-5">
-            <div class="d-flex flex-row align-items-center justify-content-center gap-4">
-                @foreach ($artikel as $data)
-                    <div class="card mb-3">
-                        <img src="{{ asset('storage/images/' . $data['Image']) }}" alt="{{ $data['Judul'] }}" class="card-img-top bg-dark" style="width: 50%%; height: auto; max-height: 200px; object-fit: cover;">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="{{ $data['Link'] }}" class="text-decoration-none">{{ $data['Judul'] }}</a></h5>
-                            <p class="card-text">{{ $data['Isi'] }}</p>
-                            <p class="card-text">
-                                <small class="text-body-secondary">{{ $data['Tanggal'] }}</small>
-                            </p>
-                        </div>
+            <div class="row g-4 align-items-start">
+                <div class="col-lg-8">
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                        @forelse ($artikel as $data)
+                            <div class="col">
+                                <div class="card h-100 shadow-sm border-0">
+                                    @if (!empty($data->Image ?? $data['Image']))
+                                        <img src="{{ asset('storage/images/' . ($data->Image ?? $data['Image'])) }}" alt="{{ $data->Judul ?? $data['Judul'] }}" class="card-img-top bg-dark" style="height: 180px; object-fit: cover;">
+                                    @endif
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <a href="{{ $data->Link ?? $data['Link'] }}" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                                                {{ $data->Judul ?? $data['Judul'] }}
+                                            </a>
+                                        </h5>
+                                        <p class="card-text text-muted">{{ $data->Isi ?? $data['Isi'] }}</p>
+                                    </div>
+                                    <div class="card-footer bg-transparent border-0">
+                                        <small class="text-body-secondary"><i class="far fa-calendar-alt me-1"></i> {{ $data->Tanggal ?? $data['Tanggal'] }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="col-12">
+                                <div class="alert alert-info">Belum ada artikel yang ditambahkan.</div>
+                            </div>
+                        @endforelse
                     </div>
-                @endforeach
-                <div class="card" style="width: 18rem;">
-                    <ul class="list-group list-group-flush">
-                        <?php
-                            foreach ($artikel as $data) {
-                        ?>      
-                        <li class="list-group-item"><?php echo $data['Judul'] ?></li>
-                        <?php
-                            }
-                        ?>
-                    </ul>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-primary text-white font-weight-bold">
+                            <i class="fas fa-newspaper me-2"></i>Daftar Artikel
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            @forelse ($artikel as $data)
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="{{ $data->Link ?? $data['Link'] }}" target="_blank" class="text-decoration-none text-dark">
+                                        {{ $data->Judul ?? $data['Judul'] }}
+                                    </a>
+                                    <span class="badge bg-light text-muted">{{ $data->Tanggal ?? $data['Tanggal'] }}</span>
+                                </li>
+                            @empty
+                                <li class="list-group-item text-muted">Tidak ada artikel</li>
+                            @endforelse
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="Profile">
-            <div class="d-flex flex-row align-items-center justify-content-center">
-                <div class="card p-2 m-5 rounded-4">
-                    <img src="{{ asset('storage/images/profile.jpg') }}" style="width: 200px; height: auto; border-radius: 10px;" alt="Profile">
-                </div>
-                <div class="card p-4">
-                    <h3 class="text-2xl font-bold mb-4">
-                        Profile
-                    </h3>
-                    <ul class="text-lg font-medium">
-                        <li>Nama: Muhammad Nazril Putra Natrabu</li>
-                        <li>Usia: 17 tahun</li>
-                        <li>Tempat Tanggal Lahir: 24 Juli 2009</li>
-                        <li>Alamat: Rancaekek</li>
-                        <li>Email: endymahavira@gmail.com</li>
-                    </ul>
+
+        <div class="Profile my-5">
+            <div class="card shadow-sm border-0 p-4">
+                <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                    <div>
+                        <img src="{{ asset('storage/images/profile.jpg') }}" style="width: 180px; height: 180px; border-radius: 15px; object-fit: cover;" alt="Profile" onerror="this.src='https://via.placeholder.com/180'">
+                    </div>
+                    <div>
+                        <h3 class="fw-bold mb-3 text-primary">
+                            Profile
+                        </h3>
+                        <ul class="list-unstyled mb-0 fs-6">
+                            <li class="py-1"><strong>Nama:</strong> Muhammad Nazril Putra Natrabu</li>
+                            <li class="py-1"><strong>Usia:</strong> 17 tahun</li>
+                            <li class="py-1"><strong>Tempat Tanggal Lahir:</strong> 24 Juli 2009</li>
+                            <li class="py-1"><strong>Alamat:</strong> Rancaekek</li>
+                            <li class="py-1"><strong>Email:</strong> endymahavira@gmail.com</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="Footer">
-            <!-- Iki Footer -->
+        <div class="Footer py-3 text-center text-muted">
+            <small>&copy; {{ date('Y') }} Endy. All rights reserved.</small>
         </div>
     </div>
 </body>
