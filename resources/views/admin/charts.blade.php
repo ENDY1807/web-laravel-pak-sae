@@ -7,7 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Charts - SB Admin</title>
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="{{ asset('admin-assets/css/styles.css') }}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -42,7 +42,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.php">
+                            <a class="nav-link" href="{{ route('admin') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
@@ -54,9 +54,9 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.php">Static Navigation</a>
-                                    <a class="nav-link" href="layout-sidenav-light.php">Light Sidenav</a>
-                                </nav>
+                                    <a class="nav-link" href="{{ route('layout_static') }}">Static Navigation</a>
+                                    <a class="nav-link" href="{{ route('layout_sidenav_light') }}">Light Sidenav</a>
+                                </nav>  
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
@@ -71,9 +71,9 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.php">Login</a>
-                                            <a class="nav-link" href="register.php">Register</a>
-                                            <a class="nav-link" href="password.php">Forgot Password</a>
+                                            <a class="nav-link" href="#" alt="ini page login">Login</a>
+                                            <a class="nav-link" href="#">Register</a>
+                                            <a class="nav-link" href="#">Forgot Password</a>
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
@@ -82,21 +82,21 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.php">401 Page</a>
-                                            <a class="nav-link" href="404.php">404 Page</a>
-                                            <a class="nav-link" href="500.php">500 Page</a>
+                                            <a class="nav-link" href="{{ route('401') }}">401 Page</a>
+                                            <a class="nav-link" href="{{ route('404') }}">404 Page</a>
+                                            <a class="nav-link" href="{{ route('500') }}">500 Page</a>
                                         </nav>
                                     </div>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.php">
+                            <a class="nav-link" href="{{ route('charts') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Charts
                             </a>
-                            <a class="nav-link" href="tables.php">
+                            <a class="nav-link" href="{{ route('data_artikel') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
+                                Data Artikel
                             </a>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Charts</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Charts</li>
                         </ol>
                         <div class="card mb-4">

@@ -11,7 +11,7 @@ if (!function_exists('endyEscapeHtml')) {
 if (isset($_GET['hapus'])) {
     $id = filter_input(INPUT_GET, 'hapus', FILTER_VALIDATE_INT);
     if ($id !== false && $id !== null) {
-        $hapus = mysqli_prepare($connect, 'DELETE FROM artikel WHERE id = ?');
+        $hapus = mysqli_prepare($connect, 'DELETE FROM artikel WHERE Id = ?');
         mysqli_stmt_bind_param($hapus, 'i', $id);
         mysqli_stmt_execute($hapus);
         mysqli_stmt_close($hapus);
@@ -26,7 +26,7 @@ if (isset($_POST['tambah'])) {
     $isi = trim($_POST['Isi'] ?? '');
     $tanggal = $_POST['Tanggal'] ?? '';
     $image = trim($_POST['Image'] ?? '');
-    $link = trim($_POST['link'] ?? '');
+    $link = trim($_POST['Link'] ?? '');
 
     if ($id !== false && $id !== null && $judul !== '' && $isi !== '' &&
         DateTime::createFromFormat('Y-m-d', $tanggal) !== false &&
@@ -42,20 +42,30 @@ if (isset($_POST['tambah'])) {
 
 if (isset($_POST['edit'])) {
     $id = filter_input(INPUT_POST, 'Id', FILTER_VALIDATE_INT);
-    $judul = trim($_POST['judul'] ?? '');
+    $judul = trim($_POST['Judul'] ?? '');
     $isi = trim($_POST['Isi'] ?? '');
     $tanggal = $_POST['Tanggal'] ?? '';
+    $link = trim($_POST['Link'] ?? '');
     $image = trim($_POST['Image'] ?? '');
-    $link = trim($_POST['link'] ?? '');
+
+    $tanggalObj = DateTime::createFromFormat('!Y-m-d', $tanggal);
+    $tanggalValid = $tanggalObj &&
+    $tanggalObj->format('Y-m-d') === $tanggal;
 
     if (
-        $id !== false && $id !== null && $judul !== '' && $isi !== '' && DateTime::createFromFormat('!Y-m-d', $tanggal) !== false && filter_var($link, FILTER_VALIDATE_URL)
+        $id !== false && $id !== null && $id > 0 && $judul !== '' && $isi !== '' && $tanggalValid && filter_var($link, FILTER_VALIDATE_URL)
     ) {
-        $edit = mysqli_prepare($connect,'UPDATE artikel SET Judul = ?, Isi = ?, Tanggal = ?, Image = ?, link = ? WHERE Id = ?');
-        mysqli_stmt_bind_param( $edit, 'sssssi', $judul, $isi, $tanggal, $image, $link, $id);
+        $edit = mysqli_prepare( $connect, 'UPDATE artikel  SET Judul = ?, Isi = ?, Tanggal = ?, Image = ?, Link = ? WHERE Id = ?'
+        );
+
+        mysqli_stmt_bind_param(
+            $edit, 'sssssi', $judul, $isi, $tanggal, $image, $link, $id
+        );
+
         mysqli_stmt_execute($edit);
         mysqli_stmt_close($edit);
     }
+
     header('Location: /admin/data-artikel');
     exit;
 }
@@ -117,7 +127,7 @@ $artikel = $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
                         <div class="sb-sidenav-menu-heading">
                             Interface
                         </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="{{ route('layout_static') }}" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-columns"></i>
                             </div>
@@ -128,8 +138,8 @@ $artikel = $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.php"> Static Navigation</a>
-                                <a class="nav-link" href="layout-sidenav-light.php"> Light Sidenav</a>
+                                <a class="nav-link" href="{{ route('layout_static') }}"> Static Navigation</a>
+                                <a class="nav-link" href="{{ route('layout_sidenav_light') }}"> Light Sidenav</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -150,9 +160,9 @@ $artikel = $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
                                 </a>
                                 <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.php"> Login</a>
-                                        <a class="nav-link" href="register.php"> Register</a>
-                                        <a class="nav-link" href="password.php"> Forgot Password</a>
+                                        <a class="nav-link" href="#" alt="Ini Page Login"> Login</a>
+                                        <a class="nav-link" href="#"> Register</a>
+                                        <a class="nav-link" href="#"> Forgot Password</a>
                                     </nav>
                                 </div>
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">Error
@@ -162,9 +172,9 @@ $artikel = $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
                                 </a>
                                 <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="401.php">401 Page</a>
-                                        <a class="nav-link" href="404.php">404 Page</a>
-                                        <a class="nav-link"href="500.php">500 Page</a>
+                                        <a class="nav-link" href="{{ route('401') }}">401 Page</a>
+                                        <a class="nav-link" href="{{ route('404') }}">404 Page</a>
+                                        <a class="nav-link" href="{{ route('500') }}">500 Page</a>
                                     </nav>
                                 </div>
                             </nav>
@@ -172,13 +182,13 @@ $artikel = $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
                         <div class="sb-sidenav-menu-heading">
                             Addons
                         </div>
-                        <a class="nav-link" href="charts.php">
+                        <a class="nav-link" href="{{ route('charts') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-chart-area"></i>
                             </div>
                             Charts
                         </a>
-                        <a class="nav-link" href="data_artikel.php">
+                        <a class="nav-link" href="{{ route('data_artikel') }}">
                             <div class="sb-nav-link-icon">
                                 <i class="fas fa-table"></i>
                             </div>
@@ -200,7 +210,7 @@ $artikel = $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
                             <h1 class="mt-4">Artikel</h1>
                             <ol class="breadcrumb mb-4">
                                 <li class="breadcrumb-item">
-                                    <a href="index.php">Dashboard</a>
+                                    <a href="{{ route('admin') }}">Dashboard</a>
                                 </li>
                                 <li class="breadcrumb-item active">Data Artikel</li>
                             </ol>
@@ -286,12 +296,12 @@ $artikel = $result ? mysqli_fetch_all($result, MYSQLI_ASSOC) : [];
                         </div>
                         <div class="mb-3">
                             <label for="link" class="form-label">Link Artikel</label>
-                            <input type="url" class="form-control" id="link" name="link" placeholder="https://contoh.com" required>
+                            <input type="url" class="form-control" id="link" name="link" placeholder="Masukan Link Artikel" required>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" name="edit" class="btn btn-primary"><i class="fas fa-save"></i>Simpan Perubahan</button>
+                        <button type="submit" name="edit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan Perubahan</button>
                     </div>
                 </form>
             </div>

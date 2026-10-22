@@ -56,7 +56,7 @@ if (!function_exists('endyEscapeHtml')) {
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="index.php">
+                            <a class="nav-link" href="{{ route('admin') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
@@ -68,8 +68,8 @@ if (!function_exists('endyEscapeHtml')) {
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.php">Static Navigation</a>
-                                    <a class="nav-link" href="layout-sidenav-light.php">Light Sidenav</a>
+                                    <a class="nav-link" href="{{ route('layout_static') }}">Static Navigation</a>
+                                    <a class="nav-link" href="{{ route('layout_sidenav_light') }}">Light Sidenav</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -85,9 +85,9 @@ if (!function_exists('endyEscapeHtml')) {
                                     </a>
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.php">Login</a>
-                                            <a class="nav-link" href="register.php">Register</a>
-                                            <a class="nav-link" href="password.php">Forgot Password</a>
+                                            <a class="nav-link" href="#" alt="ini page login">Login</a>
+                                            <a class="nav-link" href="#" alt="ini page register">Register</a>
+                                            <a class="nav-link" href="#" alt="ini page forgot password">Forgot Password</a>
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
@@ -96,15 +96,15 @@ if (!function_exists('endyEscapeHtml')) {
                                     </a>
                                     <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="401.php">401 Page</a>
-                                            <a class="nav-link" href="404.php">404 Page</a>
-                                            <a class="nav-link" href="500.php">500 Page</a>
+                                            <a class="nav-link" href="{{ route('401') }}" alt="ini page 401">401 Page</a>
+                                            <a class="nav-link" href="{{ route('404') }}" alt="ini page 404">404 Page</a>
+                                            <a class="nav-link" href="{{ route('500') }}" alt="ini page 500">500 Page</a>
                                         </nav>
                                     </div>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.php">
+                            <a class="nav-link" href="{{ route('charts') }}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Charts
                             </a>

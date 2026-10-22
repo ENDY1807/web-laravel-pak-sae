@@ -7,7 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>404 Error - SB Admin</title>
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="{{ asset('admin-assets/css/styles.css') }}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -18,9 +18,9 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-6">
                                 <div class="text-center mt-4">
-                                    <img class="mb-4 img-error" src="assets/img/error-404-monochrome.svg" />
+                                    <img class="mb-4 img-error" src="{{ asset('admin-assets/assets/img/error-404-monochrome.svg') }}" />
                                     <p class="lead">This requested URL was not found on this server.</p>
-                                    <a href="index.php">
+                                    <a href="{{ route('admin') }}">
                                         <i class="fas fa-arrow-left me-1"></i>
                                         Return to Dashboard
                                     </a>

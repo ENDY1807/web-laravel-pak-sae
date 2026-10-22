@@ -24,3 +24,23 @@ Route::get('/admin/data-artikel', function () {
 Route::get('/admin/charts', function () {
     return view('admin.charts');
 })->name('charts');
+
+Route::get('/admin/layout-static', function () {
+    return view('admin.layout-static');
+})->name('layout_static');
+
+Route::get('/admin/layout-sidenav-light', function () {
+    return view('admin.layout-sidenav-light');
+})->name('layout_sidenav_light');
+
+Route::get('/admin/401', function () {
+    return view('admin.401');
+})->name('401');
+
+Route::get('/admin/404', function () {
+    return view('admin.404');
+})->name('404');
+
+Route::get('/admin/500', function () {
+    return view('admin.500');
+})->name('500');
