@@ -127,7 +127,7 @@
                                             <tr>
                                                 <td class="text-center">
                                                     @if ($data->Image)
-                                                        <img src="{{ asset('storage/images/' . $data->Image) }}" alt="{{ $data->Judul }}" style="height: 40px; width: 40px; object-fit: cover; border-radius: 4px;" onerror="this.src='https://via.placeholder.com/40'">
+                                                        <img src="{{ asset('storage/images/' . $data->Image) }}" alt="{{ $data->Judul }}" style="height: auto; width: 50%; object-fit: cover; border-radius: 4px;" onerror="this.src='https://via.placeholder.com/40'">
                                                     @else
                                                         <span class="text-muted">-</span>
                                                     @endif
@@ -142,12 +142,10 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex gap-2">
-                                                        <!-- Tombol Edit -->
                                                         <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditArtikel{{ $data->Id }}" title="Edit">
                                                             <i class="fas fa-pencil"></i>
                                                         </button>
 
-                                                        <!-- Tombol Hapus -->
                                                         <form action="{{ route('data_artikel.destroy', $data->Id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel \'{{ $data->Judul }}\'?')">
                                                             @csrf
                                                             @method('DELETE')
@@ -159,7 +157,6 @@
                                                 </td>
                                             </tr>
 
-                                            <!-- Modal Edit Artikel -->
                                             <div class="modal fade" id="modalEditArtikel{{ $data->Id }}" tabindex="-1" aria-labelledby="modalEditLabel{{ $data->Id }}" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">

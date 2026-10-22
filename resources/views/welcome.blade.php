@@ -40,8 +40,8 @@
                         </ul>
                     </div>
                     <div class="text-end">
-                        <a class="btn btn-outline-primary btn-sm" href="{{ route('admin') }}">
-                            Login Admin
+                        <a class="nav-link" href="{{ route('admin') }}">
+                            Login
                         </a>
                     </div>
                 </div>
@@ -80,16 +80,12 @@
 
                 <div class="col-lg-4">
                     <div class="card shadow-sm border-0">
-                        <div class="card-header bg-primary text-white font-weight-bold">
-                            <i class="fas fa-newspaper me-2"></i>Daftar Artikel
-                        </div>
                         <ul class="list-group list-group-flush">
                             @forelse ($artikel as $data)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="{{ $data->Link ?? $data['Link'] }}" target="_blank" class="text-decoration-none text-dark">
                                         {{ $data->Judul ?? $data['Judul'] }}
                                     </a>
-                                    <span class="badge bg-light text-muted">{{ $data->Tanggal ?? $data['Tanggal'] }}</span>
                                 </li>
                             @empty
                                 <li class="list-group-item text-muted">Tidak ada artikel</li>
@@ -107,7 +103,7 @@
                         <img src="{{ asset('storage/images/profile.jpg') }}" style="width: 180px; height: 180px; border-radius: 15px; object-fit: cover;" alt="Profile" onerror="this.src='https://via.placeholder.com/180'">
                     </div>
                     <div>
-                        <h3 class="fw-bold mb-3 text-primary">
+                        <h3 class="fw-bold mb-3">
                             Profile
                         </h3>
                         <ul class="list-unstyled mb-0 fs-6">
